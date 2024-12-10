@@ -369,6 +369,7 @@ class MODEL_TENSOR(IntEnum):
     ENC_OUTPUT_NORM      = auto()
     CLS                  = auto() # classifier
     CLS_OUT              = auto() # classifier output projection
+    CONV1D               = auto()
     CONV_NEXT_DW         = auto()
     CONV_NEXT_NORM       = auto()
     CONV_NEXT_SHIFT      = auto()
@@ -385,7 +386,6 @@ class MODEL_TENSOR(IntEnum):
     POS_NET_ATTN_K       = auto()
     POS_NET_ATTN_V       = auto()
     POS_NET_ATTN_OUT     = auto()
-    QNTZ_CBOOK_EMBD      = auto()
     HANN_WINDOW          = auto()
 
 
@@ -551,6 +551,7 @@ TENSOR_NAMES: dict[MODEL_TENSOR, str] = {
     MODEL_TENSOR.ENC_OUTPUT_NORM:           "enc.output_norm",
     MODEL_TENSOR.CLS:                       "cls",
     MODEL_TENSOR.CLS_OUT:                   "cls.output",
+    MODEL_TENSOR.CONV1D:                    "conv1d",
     MODEL_TENSOR.CONV_NEXT_DW:              "conv_next.{bid}.dw",
     MODEL_TENSOR.CONV_NEXT_NORM:            "conv_next.{bid}.norm",
     MODEL_TENSOR.CONV_NEXT_SHIFT:           "conv_next.{bid}.shift",
@@ -567,7 +568,6 @@ TENSOR_NAMES: dict[MODEL_TENSOR, str] = {
     MODEL_TENSOR.POS_NET_ATTN_K:            "pos_net.{bid}.attn_k",
     MODEL_TENSOR.POS_NET_ATTN_V:            "pos_net.{bid}.attn_v",
     MODEL_TENSOR.POS_NET_ATTN_OUT:          "pos_net.{bid}.attn_output",
-    MODEL_TENSOR.QNTZ_CBOOK_EMBD:           "qntz.cbook.{bid}.embd",
     MODEL_TENSOR.HANN_WINDOW:               "hann_window",
 }
 
@@ -1374,6 +1374,7 @@ MODEL_TENSORS: dict[MODEL_ARCH, list[MODEL_TENSOR]] = {
         MODEL_TENSOR.TOKEN_EMBD,
         MODEL_TENSOR.TOKEN_EMBD_NORM,
         MODEL_TENSOR.TOKEN_EMBD_SHIFT,
+        MODEL_TENSOR.CONV1D,
         MODEL_TENSOR.CONV_NEXT_DW,
         MODEL_TENSOR.CONV_NEXT_NORM,
         MODEL_TENSOR.CONV_NEXT_SHIFT,
@@ -1392,7 +1393,6 @@ MODEL_TENSORS: dict[MODEL_ARCH, list[MODEL_TENSOR]] = {
         MODEL_TENSOR.POS_NET_ATTN_K,
         MODEL_TENSOR.POS_NET_ATTN_V,
         MODEL_TENSOR.POS_NET_ATTN_OUT,
-        MODEL_TENSOR.QNTZ_CBOOK_EMBD,
         MODEL_TENSOR.HANN_WINDOW,
     ],
     # TODO
