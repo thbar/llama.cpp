@@ -686,6 +686,9 @@ class Model:
         return res
         # Marker: End get_vocab_base_pre
 
+    def _set_vocab_none(self) -> None:
+        self.gguf_writer.add_tokenizer_model("none")
+
     def _set_vocab_gpt2(self) -> None:
         tokens, toktypes, tokpre = self.get_vocab_base()
         self.gguf_writer.add_tokenizer_model("gpt2")
@@ -1999,6 +2002,29 @@ class Qwen2Model(Model):
                 self.gguf_writer.add_rope_scaling_type(gguf.RopeScalingType.YARN)
                 self.gguf_writer.add_rope_scaling_factor(self.hparams["rope_scaling"]["factor"])
                 self.gguf_writer.add_rope_scaling_orig_ctx_len(self.hparams["rope_scaling"]["original_max_position_embeddings"])
+
+
+@Model.register("OuteTTSVocoder")
+class OuteTTSVocoderModel(Model):
+    model_arch = gguf.MODEL_ARCH.OUTETTS_VOC
+
+    def modify_tensors(self, data_torch: Tensor, name: str, bid: int | None) -> Iterable[tuple[str, Tensor]]:
+        del bid  # unused
+
+        if \
+                name.endswith("codebook.cluster_size") or \
+                name.endswith("codebook.embed_avg") or \
+                name.endswith("codebook.inited"):
+            logger.debug(f"Skipping {name!r}")
+            return []
+
+        return [(self.map_tensor_name(name), data_torch)]
+
+    def set_vocab(self):
+        self._set_vocab_none()
+
+    def set_gguf_parameters(self):
+        self.gguf_writer.add_block_count(self.block_count)
 
 
 @Model.register("Qwen2MoeForCausalLM")
