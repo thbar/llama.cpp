@@ -384,7 +384,6 @@ class MODEL_TENSOR(IntEnum):
     POS_NET_ATTN_K       = auto()
     POS_NET_ATTN_V       = auto()
     POS_NET_ATTN_OUT     = auto()
-    HANN_WINDOW          = auto()
 
 
 MODEL_ARCH_NAMES: dict[MODEL_ARCH, str] = {
@@ -564,7 +563,6 @@ TENSOR_NAMES: dict[MODEL_TENSOR, str] = {
     MODEL_TENSOR.POS_NET_ATTN_K:            "pos_net.{bid}.attn_k",
     MODEL_TENSOR.POS_NET_ATTN_V:            "pos_net.{bid}.attn_v",
     MODEL_TENSOR.POS_NET_ATTN_OUT:          "pos_net.{bid}.attn_output",
-    MODEL_TENSOR.HANN_WINDOW:               "hann_window",
 }
 
 MODEL_TENSORS: dict[MODEL_ARCH, list[MODEL_TENSOR]] = {
@@ -1387,7 +1385,6 @@ MODEL_TENSORS: dict[MODEL_ARCH, list[MODEL_TENSOR]] = {
         MODEL_TENSOR.POS_NET_ATTN_K,
         MODEL_TENSOR.POS_NET_ATTN_V,
         MODEL_TENSOR.POS_NET_ATTN_OUT,
-        MODEL_TENSOR.HANN_WINDOW,
     ],
     # TODO
 }
